@@ -148,3 +148,49 @@ void display_graphic_write(unsigned char row,unsigned char col,unsigned char dat
     vram_data_write(data,0);
 }
 
+
+void display_flush_cb(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p) {
+    // durata 0,39ms
+    int row = area->y1, col;
+    unsigned int address = (unsigned int)row * HW_COLUMNS + area->x1/8;
+    unsigned char *buffer;
+    int linelen = (area->x2 - area->x1)/8;
+    
+    buffer = (unsigned char*) color_p;
+    
+    for (row = area->y1; row <= area->y2; row++) {
+        
+        set_address_pointer(address);
+        
+//        for (col = area->x1/8; col <= area->x2/8; col++) {
+//            vram_data_write(gbuf[(unsigned int) row * HW_COLUMNS + (unsigned int) col], TRUE);
+//        }
+        for (col = 0; col <= linelen; col++) {
+            vram_data_write(buffer[col], 1);
+        }
+        buffer += linelen+1;
+        address += HW_COLUMNS;
+    }
+    
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
+}
+
+
+ void display_set_pixel(struct _lv_disp_drv_t * disp_drv, uint8_t * buf, lv_coord_t buf_w, lv_coord_t x, lv_coord_t y, lv_color_t color, lv_opa_t opa) {
+    buf += buf_w/8 * y;
+    buf += x/8;
+    if(lv_color_brightness(color) > 128) {(*buf) |= (1 << (7 - x % 8));}
+    else {(*buf) &= ~(1 << (7 - x % 8));}
+}
+
+
+void display_rounder(struct _lv_disp_drv_t * disp_drv, lv_area_t *a){
+    a->x1 = a->x1 & ~(0x7);
+    a->x2 = a->x2 |  (0x7);
+    a->x2 = a->x2 > 239 ? 239 : a->x2;
+    a->y2 = a->y2 > 127 ? 127 : a->y2;
+}
+
+

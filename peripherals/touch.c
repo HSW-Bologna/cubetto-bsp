@@ -775,3 +775,10 @@ void Touch__CycleRoutine(void) {
         f_touch_detected = 0;
     }
 }
+
+bool touch_input_read(lv_indev_drv_t * drv, lv_indev_data_t*data) {
+    data->point.x = Touch_Coord[0]; 
+    data->point.y = Touch_Coord[1];
+    data->state = f_touch_detected ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
+    return false; /*No buffering now so no more data read*/
+}

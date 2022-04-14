@@ -1,6 +1,7 @@
 #ifndef DISPLAY_H_INCLUDED
 #define DISPLAY_H_INCLUDED
 
+#include "lvgl/src/hal/lv_hal_disp.h"
 
 #define OR_MODE                 0x80
 #define EXOR_MODE               0x81
@@ -29,5 +30,9 @@ void display_graphic_write(unsigned char row, unsigned char col, unsigned char d
 
 void vram_data_write(unsigned char data,unsigned char increment);
 void set_address_pointer(unsigned int address);
+ void display_set_pixel(struct _lv_disp_drv_t * disp_drv, uint8_t * buf, lv_coord_t buf_w, lv_coord_t x, lv_coord_t y, lv_color_t color, lv_opa_t opa);
+ void display_rounder(struct _lv_disp_drv_t * disp_drv, lv_area_t *a);
+ void display_flush_cb(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p);
+
 
 #endif

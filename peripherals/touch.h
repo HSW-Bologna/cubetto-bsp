@@ -163,5 +163,6 @@ extern unsigned char               bit_val;
 extern unsigned short              word_val;
 extern unsigned char               write_idx;
 extern unsigned short Touch_Val[NUM_OF_TOUCH_CHANNEL_ELEMENTS][DOUBLE_BUFFERING_SIZE];
+bool touch_input_read(lv_indev_drv_t * drv, lv_indev_data_t*data);
 
 #endif

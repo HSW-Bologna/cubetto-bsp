@@ -22,10 +22,17 @@ void spi_devices_init(void) {
 
     mcp23x17_init(exp_driver, MCP23X17_ADDR_1, 1);
     mcp23x17_init(exp_driver, MCP23X17_ADDR_2, 1);
+    
+    DIGOUT_RELE4_TRIS = 0;
+    DIGOUT_RELE6_TRIS = 0;
+    mcp23x17_set_gpio_direction_register(exp_driver, MCP23X17_ADDR_1, 0);
+    DIGIN_IN6_TRIS = 1;
+    DIGIN_IN7_TRIS = 1;
+    mcp23x17_set_gpio_direction_register(exp_driver, MCP23X17_ADDR_2, 0xFFFF);
 
     for (i = MCP23X17_GPIO_1; i <= MCP23X17_GPIO_16; i++) {
-        mcp23x17_set_gpio_direction(exp_driver, MCP23X17_ADDR_1, i, MCP23X17_OUTPUT_MODE);
-        mcp23x17_set_gpio_direction(exp_driver, MCP23X17_ADDR_2, i, MCP23X17_OUTPUT_MODE);
+        //mcp23x17_set_gpio_direction(exp_driver, MCP23X17_ADDR_1, i, MCP23X17_OUTPUT_MODE);
+        //mcp23x17_set_gpio_direction(exp_driver, MCP23X17_ADDR_2, i, MCP23X17_OUTPUT_MODE);
     }
     mcp23x17_set_gpio_register(exp_driver, MCP23X17_ADDR_1, 0x0000);
     mcp23x17_set_gpio_register(exp_driver, MCP23X17_ADDR_2, 0);
