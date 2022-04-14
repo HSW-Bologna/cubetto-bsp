@@ -1,7 +1,8 @@
 #ifndef HARDWAREPROFILE_H_INCLUDED
 #define HARDWAREPROFILE_H_INCLUDED
 
-#include <xc.h>
+
+#include "system.h"
 
 
 //  I/O pin definitions
@@ -33,6 +34,15 @@
 #define HAP_DOUT_TRIS TRISFbits.TRISF1
 #define HAP_DIN       PORTBbits.RB10
 #define HAP_DIN_TRIS  TRISBbits.TRISB10
+
+#define I2C_CLK HAP_CLK
+#define I2C_CLK_TRIS HAP_CLK_TRIS
+#define I2C_DATA_OUT HAP_DOUT
+#define I2C_DATA_TRIS HAP_DOUT_TRIS
+#define I2C_DATA_IN HAP_DIN
+#define I2C_DATA_IN_TRIS HAP_DIN_TRIS
+
+
 
 // IC TOUCH SCREEN
 #define HAP_CS2       LATDbits.LATD6

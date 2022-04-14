@@ -64,9 +64,11 @@
 
 
 void system_oscillator_config(void) {
+    
+    // PROCESSOR RUNNING AT 120MHZ
     // abilito il PLL e attendo che si stabilizzi
     CLKDIVbits.PLLPRE  = 0;
-    CLKDIVbits.FRCDIV  = 0;
+    CLKDIVbits.FRCDIV  = 0; 
     CLKDIVbits.PLLPOST = 0;
     PLLFBDbits.PLLDIV  = 63;
     __builtin_write_OSCCONH(0x01);
